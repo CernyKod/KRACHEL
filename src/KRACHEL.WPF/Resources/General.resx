@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EelementAdd" xml:space="preserve">
+    <value>Přidat</value>
+  </data>
+  <data name="ElementClose" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="ElementEdit" xml:space="preserve">
+    <value>Změnit</value>
+  </data>
+  <data name="ElementFileAnalyze" xml:space="preserve">
+    <value>Analyzovat</value>
+  </data>
+  <data name="ElementProcess" xml:space="preserve">
+    <value>Zpracovat</value>
+  </data>
+  <data name="ElementRemove" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="ElementRemoveAll" xml:space="preserve">
+    <value>Odstranit vše</value>
+  </data>
+  <data name="ElementSave" xml:space="preserve">
+    <value>Uložit</value>
+  </data>
+  <data name="ElementSelectFile" xml:space="preserve">
+    <value>Procházet</value>
+  </data>
+  <data name="ElementSortByTime" xml:space="preserve">
+    <value>Seřadit dle času</value>
+  </data>
+  <data name="ErrorProcessingFailed" xml:space="preserve">
+    <value>Zpracování se nezdařilo.</value>
+  </data>
+  <data name="InformationRequestIsProcessed" xml:space="preserve">
+    <value>Probíhá zpracování, čekejte.</value>
+  </data>
+  <data name="LabelAtTime" xml:space="preserve">
+    <value>V čase</value>
+  </data>
+  <data name="LabelAudioFile" xml:space="preserve">
+    <value>Audio stopa</value>
+  </data>
+  <data name="LabelFilePath" xml:space="preserve">
+    <value>Cesta k souboru</value>
+  </data>
+  <data name="LabelHour" xml:space="preserve">
+    <value>Hodina</value>
+  </data>
+  <data name="LabelMilisecond" xml:space="preserve">
+    <value>Milisekunda</value>
+  </data>
+  <data name="LabelMinute" xml:space="preserve">
+    <value>Minuta</value>
+  </data>
+  <data name="LabelSaveAs" xml:space="preserve">
+    <value>Uložit jako</value>
+  </data>
+  <data name="LabelSecond" xml:space="preserve">
+    <value>Sekunda</value>
+  </data>
+  <data name="LabelVideoFile" xml:space="preserve">
+    <value>Video soubor</value>
+  </data>
+  <data name="LabelVideoParts" xml:space="preserve">
+    <value>Položky videa</value>
+  </data>
+  <data name="NameAudioExtractor" xml:space="preserve">
+    <value>Audio extraktor</value>
+  </data>
+  <data name="NameError" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="NameInformation" xml:space="preserve">
+    <value>Informace</value>
+  </data>
+  <data name="NameVideoEditor" xml:space="preserve">
+    <value>Video editor</value>
+  </data>
+  <data name="NameVideoPart" xml:space="preserve">
+    <value>Položka videa</value>
+  </data>
+  <data name="NameWarning" xml:space="preserve">
+    <value>Varování</value>
+  </data>
+  <data name="PartAllSupportedFormats" xml:space="preserve">
+    <value>Všechny podporované formáty</value>
+  </data>
+  <data name="PartAtTime" xml:space="preserve">
+    <value>V čase</value>
+  </data>
+  <data name="PartFile" xml:space="preserve">
+    <value>Soubor</value>
+  </data>
+  <data name="SuccessProcessingOK" xml:space="preserve">
+    <value>Zpracování bylo úspěšně dokončeno.</value>
+  </data>
+  <data name="VideoEditorFirstPartMissing" xml:space="preserve">
+    <value>V čase 0:0:0:0 není umístěna žádná položka videa.</value>
+  </data>
+  <data name="WarningFilePathIsNotValid" xml:space="preserve">
+    <value>Cesta k souboru není platná.</value>
+  </data>
+  <data name="WarningSelectionIsEmpty" xml:space="preserve">
+    <value>Nebyla vybrána žádná položka.</value>
+  </data>
+  <data name="WarningValueIsNotNumber" xml:space="preserve">
+    <value>Není platné číslo.</value>
+  </data>
+  <data name="WarningValueIsNotValid" xml:space="preserve">
+    <value>Není platná hodnota.</value>
+  </data>
+</root>

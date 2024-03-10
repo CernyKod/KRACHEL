@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82CAE2AE-0031-4BD0-B395-FC35E174B1CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KRACHEL.WPF", "src\KRACHEL.WPF\KRACHEL.WPF.csproj", "{B8412D97-446F-4A7B-B83C-29F26CC6AD76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KRACHEL.Core", "src\KRACHEL.Core\KRACHEL.Core.csproj", "{184539F7-F47C-479C-8703-DD1015B2C934}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KRACHEL.Infrastructure", "src\KRACHEL.Infrastructure\KRACHEL.Infrastructure.csproj", "{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8412D97-446F-4A7B-B83C-29F26CC6AD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8412D97-446F-4A7B-B83C-29F26CC6AD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8412D97-446F-4A7B-B83C-29F26CC6AD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8412D97-446F-4A7B-B83C-29F26CC6AD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184539F7-F47C-479C-8703-DD1015B2C934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184539F7-F47C-479C-8703-DD1015B2C934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184539F7-F47C-479C-8703-DD1015B2C934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184539F7-F47C-479C-8703-DD1015B2C934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8412D97-446F-4A7B-B83C-29F26CC6AD76} = {82CAE2AE-0031-4BD0-B395-FC35E174B1CB}
+		{184539F7-F47C-479C-8703-DD1015B2C934} = {82CAE2AE-0031-4BD0-B395-FC35E174B1CB}
+		{9F6BA4C0-1AB9-48B8-A2D9-D3CCE3B3662F} = {82CAE2AE-0031-4BD0-B395-FC35E174B1CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6174601-6E01-481A-9434-CCBAFA737204}
+	EndGlobalSection
+EndGlobal

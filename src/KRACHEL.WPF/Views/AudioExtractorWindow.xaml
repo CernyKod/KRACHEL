@@ -1,0 +1,46 @@
+﻿<Window x:Class="KRACHEL.WPF.Views.AudioExtractorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:KRACHEL.WPF.Resources"
+        xmlns:local="clr-namespace:KRACHEL.WPF.Views"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="450" Width="800">
+    <Grid Style="{StaticResource WindowContentGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--Video file-->
+        <GroupBox Grid.Row="0" Header="{x:Static res:General.LabelVideoFile}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="SourceVideoFilePath" Text="{Binding SourceVideoFilePath}" IsReadOnly="True" AutomationProperties.Name="Cesta k souboru"></TextBox>
+                <Button Name="SourceVideoFilePathSelect" Grid.Column="1" Content="{x:Static res:General.ElementSelectFile}" Click="SourceVideoFilePathSelect_Click"></Button>
+            </Grid>
+        </GroupBox>
+        
+        <!--Audio file-->
+        <GroupBox Grid.Row="1" Header="{x:Static res:General.LabelAudioFile}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="ResultAudioFilePath" Text="{Binding ResultAudioFilePath}" IsReadOnly="True" AutomationProperties.Name="Uložit jako" ></TextBox>
+                <Button Name="ResultAudioFilePathSelect" Grid.Column="1" Content="{x:Static res:General.ElementSelectFile}" Click="ResultAudioFilePathSelect_Click"></Button>
+            </Grid>
+        </GroupBox>
+        
+        <Button Name="Process" Grid.Row="3" Click="Process_Click" Content="{x:Static res:General.ElementProcess}"/>
+    </Grid>
+</Window>
