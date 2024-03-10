@@ -57,7 +57,7 @@ namespace KRACHEL.WPF.Views
 
             try
             {                
-                _viewModel.Extract();
+                await _viewModel.Extract();
             } catch
             {
                 throw;

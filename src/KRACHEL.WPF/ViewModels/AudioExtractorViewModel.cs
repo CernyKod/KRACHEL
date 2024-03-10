@@ -50,7 +50,7 @@ namespace KRACHEL.WPF.ViewModels
             {
                 _resultAudioFilePath = value;
                 NotifyPropertyChanged(nameof(ResultAudioFilePath));
-                ValidateFilePath(nameof(ResultAudioFilePath), _resultAudioFilePath);
+                ValidateNullOrEmpty(nameof(ResultAudioFilePath), _resultAudioFilePath);
             }
         
         }     
