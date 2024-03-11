@@ -12,6 +12,8 @@ namespace KRACHEL.Infrastructure.AppSettings
 
         public int FFProcessTimeout { get; set; }   
 
+        public string FFVerbosity { get; set; }
+
         public int VideoResolutionWidth { get; set; }
 
         public int VideoResolutionHeight { get; set; }

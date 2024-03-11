@@ -41,7 +41,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         public Command ExtractAudioCommand(string videoFilePath, string audioFilePath)
         {
             var programm = _appSettings.Value.FFmpegPath;
-            var arguments = $"-y -i {GenerateFilePath(videoFilePath)} -q:a 0 -map a {GenerateFilePath(audioFilePath)}";
+            var arguments = $"{_forceYes} {GenerateVerbosity()} -i {GenerateFilePath(videoFilePath)} -q:a 0 -map a {GenerateFilePath(audioFilePath)}";
 
             return Build(programm, arguments);
         }
@@ -49,7 +49,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         public Command MergeAudiWithOnePicture(string audioFilePath, string pictureFilePath, string outputFilePath)
         {
             var program = _appSettings.Value.FFmpegPath;
-            var arguments = $"-y -loop 1 -i {GenerateFilePath(pictureFilePath)} -i {GenerateFilePath(audioFilePath)} -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest {GenerateFilePath(outputFilePath)}";
+            var arguments = $"{_forceYes} {GenerateVerbosity()} -loop 1 -i {GenerateFilePath(pictureFilePath)} -i {GenerateFilePath(audioFilePath)} -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest {GenerateFilePath(outputFilePath)}";
 
             return Build(program, arguments);
         }
@@ -74,8 +74,8 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         /// </remarks>
         public Command MergeAudiWithMultiplePicture(string audioFilePath, VideoPartDTO[] videoParts, string outputFilePath, int resolutionWidth, int resolutionHeight)
         {
-            //force YES
-            var arguments = $"{_forceYes}";
+            //general
+            var arguments = $"{_forceYes} {GenerateVerbosity()}";
 
             //input file & duration
             videoParts.ToList().ForEach(vp => arguments += $" {GenerateArgumentLoop(vp.FilePath, vp.Duration + 1)}");
@@ -151,6 +151,11 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         private Command Build(string program, string arguments)
         {
             return new Command() { Program = program, Arguments = arguments };
+        }
+
+        private string GenerateVerbosity()
+        {
+            return $"-loglevel {_appSettings.Value.FFVerbosity}";
         }
     }
 }

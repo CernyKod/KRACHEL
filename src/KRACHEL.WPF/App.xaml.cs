@@ -105,7 +105,7 @@ namespace KRACHEL.WPF
         {
             _logger.LogError($"{e.Exception.Message} \n {e.Exception.InnerException} \n {e.Exception.StackTrace}");
 
-            MessageBox.Show($"{e.Exception.Message} Detail chyby naleznete v logu aplikace.", string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"{e.Exception.Message} {e.Exception.InnerException?.Message }", string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
 
             e.Handled = true;
         }

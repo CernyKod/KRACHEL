@@ -22,6 +22,8 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
 
         private SupportedFormatsDb _supportedFormatsDb;
 
+        private HumanErrorTranslator _humanErrorTranslator;
+
         public FFVideoBuilder() { }
 
         public FFVideoBuilder(ILogger<FFVideoBuilder> logger, IOptions<AppSettings.AppSettings> appSettings)
@@ -32,6 +34,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
             _processWorker = new ProcessWorker(_logger, _appSettings.Value.FFProcessTimeout);
             _commandBuilder = new CommandBuilder(_appSettings);
             _supportedFormatsDb = new SupportedFormatsDb();
+            _humanErrorTranslator = new HumanErrorTranslator();
         }
 
         public async Task<string> ExtractAudioAsync(string videoFilePath, string audioFilePath)
@@ -91,7 +94,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
 
             if (exitCode != 0)
             {
-                throw new Exception("Zpracování FF příkazu selhalo.");
+                throw new Exception($"{_humanErrorTranslator.GetTranslation(output)}\n{output}");
             }
 
             return output;

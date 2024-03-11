@@ -40,7 +40,6 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
             _logger.LogInformation($"Calling FF process. \n{command.Program}\n{command.Arguments}");
 
             int exitCode = 0;
-            string output = string.Empty;
             var outputDataBuilder = new StringBuilder();
             var errorDataBuilder = new StringBuilder();
 
@@ -51,7 +50,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.RedirectStandardError = true;
                 p.OutputDataReceived += (sender, args) => outputDataBuilder.AppendLine(args.Data);
-                p.ErrorDataReceived += (sender, args) => outputDataBuilder.AppendLine(args.Data);
+                p.ErrorDataReceived += (sender, args) => errorDataBuilder.AppendLine(args.Data);
                 p.StartInfo.FileName = command.Program;
                 p.StartInfo.Arguments = command.Arguments;              
                 p.Start();
@@ -69,11 +68,12 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
                 exitCode = p.ExitCode;
             }
 
-            output = outputDataBuilder.ToString();
+            var outputData = outputDataBuilder.ToString();
+            var errorData = errorDataBuilder.ToString();
 
-            _logger.LogInformation($"FF proecss finished with exitcode {exitCode}. \nSTDOUT:{output} \nSTDRERR{errorDataBuilder.ToString()}");
+            _logger.LogInformation($"FF proecss finished with exitcode {exitCode}. \nSTDOUT:{outputData} \nSTDRERR:{errorData}");
 
-            return new Tuple<int, string>(exitCode, output);
+            return new Tuple<int, string>(exitCode, exitCode == 0 ? outputData : errorData);
         }
     }
 }
