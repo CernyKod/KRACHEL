@@ -1,5 +1,5 @@
 # KRACHEL
-Utilita pro jednoduchou a rychlou tvorbu/editaci video a audio souborů. Utilita je dálě vývíjena dle požadavků uživatelů.
+Utilita pro jednoduchou a rychlou tvorbu/editaci video a audio souborů. Utilita je dále vyvíjena dle požadavků uživatelů.
 
 ## Použití
 * Utilita pro MS Windows, kterou lze stáhnout a přímo spustit bez nutnosti instalace. Distribuce ve formě ZIP archivu, který je třeba po stažení rozbalit. Pak lze již přímo spustit utilitu, resp. KRACHEL.EXE.
