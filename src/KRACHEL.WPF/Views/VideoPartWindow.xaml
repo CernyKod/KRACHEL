@@ -23,7 +23,7 @@
 
         <!--Source file path-->
         <Label Content="{x:Static res:General.LabelFilePath}"/>
-        <TextBox Name="FilePath" Grid.Column="1" IsReadOnly="True" AutomationProperties.Name="Cesta k souboru" Text="{Binding FilePath}" />
+        <TextBox Name="FilePath" Grid.Column="1" IsReadOnly="True" AutomationProperties.Name="{x:Static res:General.LabelFilePath}" Text="{Binding FilePath}" />
         <Button Name="FileSelect" Grid.Column="2" Click="FileSelect_Click" Content="{x:Static res:General.ElementSelectFile}" />
 
         <!--At Time definition-->
@@ -41,16 +41,16 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Content="{x:Static res:General.LabelHour}" Target="{Binding ElementName=Hour}" />
-                <TextBox Name="Hour" Grid.Column="1" Grid.Row="0" Text="{Binding Hour}" AutomationProperties.Name="Hodina" />
+                <TextBox Name="Hour" Grid.Column="1" Grid.Row="0" Text="{Binding Hour}" AutomationProperties.Name="{x:Static res:General.LabelHour}" />
 
                 <Label Grid.Column="0" Grid.Row="1" Content="{x:Static res:General.LabelMinute}" Target="{Binding ElementName=Minute}" />
-                <TextBox Name="Minute" Grid.Column="1" Grid.Row="1" Text="{Binding Minute}" AutomationProperties.Name="Minuta" />
+                <TextBox Name="Minute" Grid.Column="1" Grid.Row="1" Text="{Binding Minute}" AutomationProperties.Name="{x:Static res:General.LabelMinute}" />
 
                 <Label Grid.Column="0" Grid.Row="2" Content="{x:Static res:General.LabelSecond}" Target="{Binding ElementName=Second}" />
-                <TextBox Name="Second" Grid.Column="1" Grid.Row="2" Text="{Binding Second}" AutomationProperties.Name="Sekunda" />
+                <TextBox Name="Second" Grid.Column="1" Grid.Row="2" Text="{Binding Second}" AutomationProperties.Name="{x:Static res:General.LabelSecond}" />
 
                 <Label Grid.Column="0" Grid.Row="3" Content="{x:Static res:General.LabelMilisecond}" Target="{Binding ElementName=Millisecond}" />
-                <TextBox Name="Millisecond" Grid.Column="1" Grid.Row="3" Text="{Binding Millisecond}" AutomationProperties.Name="Milisekunda" />
+                <TextBox Name="Millisecond" Grid.Column="1" Grid.Row="3" Text="{Binding Millisecond}" AutomationProperties.Name="{x:Static res:General.LabelMilisecond}" />
             </Grid>
         </GroupBox>
 

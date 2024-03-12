@@ -24,7 +24,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBox Name="SourceVideoFilePath" Text="{Binding SourceVideoFilePath}" IsReadOnly="True" AutomationProperties.Name="Cesta k souboru"></TextBox>
+                <TextBox Name="SourceVideoFilePath" Text="{Binding SourceVideoFilePath}" IsReadOnly="True" AutomationProperties.Name="{x:Static res:General.LabelFilePath}"></TextBox>
                 <Button Name="SourceVideoFilePathSelect" Grid.Column="1" Content="{x:Static res:General.ElementSelectFile}" Click="SourceVideoFilePathSelect_Click"></Button>
             </Grid>
         </GroupBox>
@@ -36,7 +36,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBox Name="ResultAudioFilePath" Text="{Binding ResultAudioFilePath}" IsReadOnly="True" AutomationProperties.Name="Uložit jako" ></TextBox>
+                <TextBox Name="ResultAudioFilePath" Text="{Binding ResultAudioFilePath}" IsReadOnly="True" AutomationProperties.Name="{x:Static res:General.LabelFilePath}" ></TextBox>
                 <Button Name="ResultAudioFilePathSelect" Grid.Column="1" Content="{x:Static res:General.ElementSelectFile}" Click="ResultAudioFilePathSelect_Click"></Button>
             </Grid>
         </GroupBox>

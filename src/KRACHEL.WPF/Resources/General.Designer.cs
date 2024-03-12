@@ -223,6 +223,15 @@ namespace KRACHEL.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seznam položek.
+        /// </summary>
+        public static string LabelPartList {
+            get {
+                return ResourceManager.GetString("LabelPartList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uložit jako.
         /// </summary>
         public static string LabelSaveAs {

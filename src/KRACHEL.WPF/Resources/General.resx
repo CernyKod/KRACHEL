@@ -171,6 +171,9 @@
   <data name="LabelMinute" xml:space="preserve">
     <value>Minuta</value>
   </data>
+  <data name="LabelPartList" xml:space="preserve">
+    <value>Seznam položek</value>
+  </data>
   <data name="LabelSaveAs" xml:space="preserve">
     <value>Uložit jako</value>
   </data>
