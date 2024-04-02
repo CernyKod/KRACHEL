@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # Vendor directory
 Vendor/
+
+# Help Doc folder
+/doc/
