@@ -70,15 +70,6 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
             return FileFormatsToDic(_supportedFormatsDb.GetVideoFormats());
         }
 
-        public async Task<string> CreateVideoWithOnePicture(string audioFilePath, string pictureFilePath, string outputFilePath)
-        {
-            var command = _commandBuilder.MergeAudiWithOnePicture(audioFilePath, pictureFilePath, outputFilePath);
-
-            var processResult = await _processWorker.RunAsync(command);
-
-            return ProcessResultResolver(processResult);
-        }
-
         private Dictionary<string, string> FileFormatsToDic(List<FileFormat> fileFormats) 
         {
             var supportedFormats = new Dictionary<string, string>();
@@ -100,13 +91,23 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
             return output;
         }
 
-        public async Task<string> CreateVideoWithMultiplePicture(string audioFilePath, IEnumerable<VideoPartDTO> videoParts, string outputFilePath)
+        public async Task<string> CreateVideoFromPictureParts(string audioFilePath, IEnumerable<VideoPartDTO> videoParts, string outputFilePath)
         {
-            var command = _commandBuilder.MergeAudiWithMultiplePicture(audioFilePath, videoParts.ToArray(), outputFilePath, _appSettings.Value.VideoResolutionWidth, _appSettings.Value.VideoResolutionHeight);
+            RecomputeDurationForXFade(videoParts);
+
+            var command = _commandBuilder.MergeAudiWithPictureParts(audioFilePath, videoParts.ToArray(), outputFilePath, _appSettings.Value.VideoResolutionWidth, _appSettings.Value.VideoResolutionHeight);
 
             var processResult = await _processWorker.RunAsync(command);
 
             return ProcessResultResolver(processResult);
+        }
+
+        private void RecomputeDurationForXFade(IEnumerable<VideoPartDTO> pictureParts)
+        {
+            foreach (var part in pictureParts)
+            {
+                part.Duration += _appSettings.Value.VideoTransitionDuration;
+            }
         }
     }
 }

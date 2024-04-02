@@ -34,6 +34,8 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
             return new List<FileFormat>()
             {
                 new FileFormat() { ID = "mp3", Description = "MP3 (MPEG audio layer 3)"},
+                new FileFormat() { ID = "flac", Description = "FLAC (Free Lossless Audio Codec)"},
+                new FileFormat() { ID = "ogg", Description = "OGG (Ogg Vorbis)"},
                 new FileFormat() { ID = "wav", Description = "WAV / WAVE (Waveform Audio)"}
             };
         }

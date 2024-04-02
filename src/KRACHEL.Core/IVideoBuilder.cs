@@ -13,7 +13,6 @@ namespace KRACHEL.Core
         IDictionary<string, string> GetSupportedVideoFormatsList();
         IDictionary<string, string> GetSupportedAudioFormatsList();
         IDictionary<string, string> GetSupportedImageFormatsList();
-        Task<string> CreateVideoWithOnePicture(string audioFilePath, string pictureFilePath, string outputFilePath);
-        Task<string> CreateVideoWithMultiplePicture(string audioFilePath, IEnumerable<VideoPartDTO> videoParts, string outputFilePath);
+        Task<string> CreateVideoFromPictureParts(string audioFilePath, IEnumerable<VideoPartDTO> pictureParts, string outputFilePath);
     }
 }

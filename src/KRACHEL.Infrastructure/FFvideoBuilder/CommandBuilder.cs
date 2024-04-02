@@ -20,6 +20,8 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
 
         private const string _videoProperties = "-pix_fmt yuv420p";
 
+        private const string _partsAligmnetOption = "-shortest";
+
         private readonly IOptions<AppSettings.AppSettings> _appSettings;
 
         public CommandBuilder() { }
@@ -32,7 +34,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         public Command FileAnalyzeCommand(string filePath)
         {
             var program = _appSettings.Value.FFprobePath;
-            var arguments = $"-i {GenerateFilePath(filePath)} -show_entries format=duration -v quiet -of csv=\"p=0\" -sexagesimal";
+            var arguments = $"-i {FilePathFormater(filePath)} -show_entries format=duration -v quiet -of csv=\"p=0\" -sexagesimal";
 
             return Build(program, arguments);
 
@@ -41,7 +43,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         public Command ExtractAudioCommand(string videoFilePath, string audioFilePath)
         {
             var programm = _appSettings.Value.FFmpegPath;
-            var arguments = $"{_forceYes} {GenerateVerbosity()} -i {GenerateFilePath(videoFilePath)} -q:a 0 -map a {GenerateFilePath(audioFilePath)}";
+            var arguments = $"{_forceYes} {GenerateVerbosity()} -i {FilePathFormater(videoFilePath)} -q:a 0 -map a {FilePathFormater(audioFilePath)}";
 
             return Build(programm, arguments);
         }
@@ -49,7 +51,7 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         public Command MergeAudiWithOnePicture(string audioFilePath, string pictureFilePath, string outputFilePath)
         {
             var program = _appSettings.Value.FFmpegPath;
-            var arguments = $"{_forceYes} {GenerateVerbosity()} -loop 1 -i {GenerateFilePath(pictureFilePath)} -i {GenerateFilePath(audioFilePath)} -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest {GenerateFilePath(outputFilePath)}";
+            var arguments = $"{_forceYes} {GenerateVerbosity()} -loop 1 -i {FilePathFormater(pictureFilePath)} -i {FilePathFormater(audioFilePath)} -c:v libx264 -pix_fmt yuv420p -c:a copy -shortest {FilePathFormater(outputFilePath)}";
 
             return Build(program, arguments);
         }
@@ -58,79 +60,99 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         /// 
         /// </summary>
         /// <param name="audioFilePath"></param>
-        /// <param name="videoParts"></param>
+        /// <param name="pictureParts"></param>
         /// <param name="outputFilePath"></param>
         /// <returns></returns>
-        /// <remarks>
-        ///     -y 
-        ///     -loop 1 -t 10 -i C:\temp\ff\images\img600_1.png 
-        ///     -loop 1 -t 10 -i C:\temp\ff\images\img600_2.png 
-        ///     -loop 1 -t 10 -i C:\temp\ff\images\img600_3.png 
-        ///     -i C:\temp\ff\RACHEL.mp3 
-        ///     -filter_complex "[0][1]xfade=transition=hrslice:duration=1:offset=9[f];[f][2]xfade=transition=hrslice:duration=1:offset=18" 
-        ///     -pix_fmt
-        ///     yuv420p
-        ///     C:\temp\ff\result.mp4
-        /// </remarks>
-        public Command MergeAudiWithMultiplePicture(string audioFilePath, VideoPartDTO[] videoParts, string outputFilePath, int resolutionWidth, int resolutionHeight)
+        public Command MergeAudiWithPictureParts(string audioFilePath, VideoPartDTO[] pictureParts, string outputFilePath, int resolutionWidth, int resolutionHeight)
         {
             //general
             var arguments = $"{_forceYes} {GenerateVerbosity()}";
 
             //input file & duration
-            videoParts.ToList().ForEach(vp => arguments += $" {GenerateArgumentLoop(vp.FilePath, vp.Duration + 1)}");
+            arguments += GenerateArgumentLoop(pictureParts);
 
             //audio input file
-            arguments += $" -i {GenerateFilePath(audioFilePath)}";
+            arguments += $" -i {FilePathFormater(audioFilePath)}";
 
             //filter complex (transition)
-            var offsetResolver = new XFadeOffsetReslover();
-            double transitionDuration;
-            double transitionOffset;
-            var streamOutputName = "f";
-            var scaleVarPrefix = "s";
-            arguments += " -filter_complex";
-            arguments += " \"";
-            for (int i = 0; i < videoParts.Count(); i++)
+            if(pictureParts.Count() > 1)
             {
-                arguments += GenerateFilterComplexScale(i.ToString(), $"{scaleVarPrefix}{i}", resolutionWidth, resolutionHeight);
-            }
-            for (int i = 1; i < videoParts.Count(); i++)
-            {
-                offsetResolver.ComputeOffsetData(videoParts[i-1].Duration+1, out transitionDuration, out transitionOffset);
-                if(i == 1)
-                {
-                    arguments += $"{GenerateFilterComplexFade($"{scaleVarPrefix}0", $"{scaleVarPrefix}1", transitionDuration, transitionOffset, i == videoParts.Count() - 1 ? null : streamOutputName)}";
-                    continue;
-                }
-
-                //if(i == videoParts.Count() - 1)
-                //{
-                //    arguments += $"{GenerateFilterComplexFade(streamOutputName, $"{scaleVarPrefix}{i}", transitionDuration, transitionOffset)}";
-                //    continue;
-                //}
-                
-                arguments += $"{GenerateFilterComplexFade(streamOutputName, $"{scaleVarPrefix}{i}", transitionDuration, transitionOffset, i == videoParts.Count() - 1 ? null : streamOutputName)}";
-            }
-            arguments += "\"";
+                arguments += GenerateFilterComplex(pictureParts);
+            }            
 
             //video format properties
             arguments += $" {_videoProperties}";
 
+            //parts aligment
+            arguments += $" {_partsAligmnetOption}";
+
             //output file path
-            arguments += $" {GenerateFilePath(outputFilePath)}";
+            arguments += $" {FilePathFormater(outputFilePath)}";
             
             return Build(_appSettings.Value.FFmpegPath, arguments);
         }
 
-        private string GenerateFilePath(string filePath)
+        private string FilePathFormater(string filePath)
         {
             return $"\"{filePath}\"";
         }
 
-        private string GenerateArgumentLoop(string inputFilePath, double duration)
+        private string NumberFormatter(double number)
         {
-            return $"-loop 1 -t {duration} -i {GenerateFilePath(inputFilePath)}";
+            return number.ToString().Replace(',', '.');
+        }
+
+        private string GenerateArgumentLoop(VideoPartDTO[] pictureParts)
+        {
+            var argument = string.Empty;
+
+            foreach(var part in pictureParts)
+            {
+                argument += " -loop 1";
+                if(!double.IsNaN(part.Duration))
+                {
+                    //čas je posunut o dobu trvání přechodu. Nutné pro korektní výpočet přechodu XFade modulu
+                    argument += $" -t {NumberFormatter(part.Duration)}";
+                }
+                argument += $" -i {FilePathFormater(part.FilePath)}";
+            }
+
+            return argument;
+        }
+
+        /// <summary>
+        /// FilterComplex - lze generovat pouze pro více položek než 1
+        /// </summary>
+        /// <param name="pictureParts"></param>
+        /// <returns></returns>
+        private string GenerateFilterComplex(VideoPartDTO[] pictureParts)
+        {
+            var argument = string.Empty;
+            var offsetResolver = new XFadeOffsetReslover(_appSettings.Value.VideoTransitionDuration);
+            double transitionDuration;
+            double transitionOffset;
+            var streamOutputName = "f";
+            var scaleVarPrefix = "s";
+            argument += " -filter_complex";
+            argument += " \"";
+            for (int i = 0; i < pictureParts.Count(); i++)
+            {
+                argument += GenerateFilterComplexScale(i.ToString(), $"{scaleVarPrefix}{i}", _appSettings.Value.VideoResolutionWidth, _appSettings.Value.VideoResolutionHeight);
+            }
+            for (int i = 1; i < pictureParts.Count(); i++)
+            {
+                offsetResolver.ComputeOffsetData(pictureParts[i - 1].Duration, out transitionDuration, out transitionOffset);
+                if (i == 1)
+                {
+                    argument += $"{GenerateFilterComplexFade($"{scaleVarPrefix}0", $"{scaleVarPrefix}1", transitionDuration, transitionOffset, i == pictureParts.Count() - 1 ? null : streamOutputName)}";
+                    continue;
+                }
+
+                argument += $"{GenerateFilterComplexFade(streamOutputName, $"{scaleVarPrefix}{i}", transitionDuration, transitionOffset, i == pictureParts.Count() - 1 ? null : streamOutputName)}";
+            }
+            argument += "\"";
+
+            return argument;
         }
 
         private string GenerateFilterComplexFade(

@@ -45,28 +45,23 @@ namespace KRACHEL.Core.Service
             return _videoBuilder.GetSupportedImageFormatsList();
         }
 
-        public Task<string> CreateVideoWithOnePicture(string audioFilePath, string pictureFilePath, string outputFilePath)
+        public Task<string> CreateVideoFromPictureParts(string audioFilePath, IEnumerable<VideoPartDTO> pictureParts, string outputFilePath)
         {
-            return _videoBuilder.CreateVideoWithOnePicture(audioFilePath, pictureFilePath, outputFilePath);
-        }
+            var picturePartsArr = pictureParts.OrderBy(vp => vp.InTime).ToArray();            
 
-        public Task<string> CreateVideoWithMiltiplePicture(string audioFilePath, IEnumerable<VideoPartDTO> videoParts, string outputFilePath)
-        {
-            var videoPartsArr = videoParts.OrderBy(vp => vp.InTime).ToArray();            
-
-            for(int i = 0; i<videoPartsArr.Count(); i++)
+            for(int i = 0; i<picturePartsArr.Count(); i++)
             {
-                if (i != videoPartsArr.Count() - 1)
+                if (i != picturePartsArr.Count() - 1)
                 {
-                    videoPartsArr[i].Duration = videoPartsArr[i + 1].InTime.Subtract(videoPartsArr[i].InTime).TotalSeconds;
+                    picturePartsArr[i].Duration = picturePartsArr[i + 1].InTime.Subtract(picturePartsArr[i].InTime).TotalSeconds;
                 }
                 else
                 {
-                    videoPartsArr[i].Duration = 1;
+                    picturePartsArr[i].Duration = double.NaN;
                 }
             }            
 
-            return _videoBuilder.CreateVideoWithMultiplePicture(audioFilePath, videoPartsArr, outputFilePath);
+            return _videoBuilder.CreateVideoFromPictureParts(audioFilePath, picturePartsArr, outputFilePath);
         }
     }
 }

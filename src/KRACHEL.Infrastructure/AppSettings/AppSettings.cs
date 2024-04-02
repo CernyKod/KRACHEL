@@ -17,5 +17,7 @@ namespace KRACHEL.Infrastructure.AppSettings
         public int VideoResolutionWidth { get; set; }
 
         public int VideoResolutionHeight { get; set; }
+
+        public double VideoTransitionDuration { get; set; }
     }
 }

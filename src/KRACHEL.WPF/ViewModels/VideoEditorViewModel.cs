@@ -112,16 +112,11 @@ namespace KRACHEL.WPF.ViewModels
 
             try
             {
-                if(VideoParts.Count > 1 )
-                {
-                    await _videoService.CreateVideoWithMiltiplePicture(
-                        SourceAudioFilePath,
-                        VideoParts.Select(vp => new VideoPartDTO() { FilePath = vp.FilePath, InTime = vp.InTime }),
-                        ResultVideoFilePath);
-                } else
-                {
-                    await _videoService.CreateVideoWithOnePicture(SourceAudioFilePath, VideoParts.First().FilePath, ResultVideoFilePath);
-                }                
+                await _videoService.CreateVideoFromPictureParts(
+                    SourceAudioFilePath,
+                    VideoParts.Select(vp => new VideoPartDTO() { FilePath = vp.FilePath, InTime = vp.InTime }),
+                    ResultVideoFilePath);
+           
                 _dialogService.InformationDialog(WPF.Resources.General.SuccessProcessingOK);
             } catch(Exception ex)
             {

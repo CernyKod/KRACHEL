@@ -9,10 +9,16 @@ namespace KRACHEL.Infrastructure.FFvideoBuilder
         /// <summary>
         /// [s]
         /// </summary>
-        private const double _transitionDuration = 1;
+        private double _transitionDuration = 0;
 
         private double _previousOffset = 0;
 
+        public XFadeOffsetReslover() { }
+
+        public XFadeOffsetReslover(double transitionDuration) 
+        {
+            _transitionDuration = transitionDuration;
+        }
 
         public void ComputeOffsetData(double inputDuration, out double transitionDuratin, out double transitionOffset)
         {
