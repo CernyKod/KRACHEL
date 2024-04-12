@@ -142,5 +142,14 @@ namespace KRACHEL.WPF.ViewModels
                 AddError(propertyName, WPF.Resources.General.WarningValueIsNotValid);
             }
         }
+
+        protected void ValidateComboSelect(string propertyName, int value)
+        {
+            ClearErrors(propertyName);
+            if(value == 0) 
+            {
+                AddError(propertyName, WPF.Resources.General.WarningValueIsNotValid);
+            }
+        }
     }
 }

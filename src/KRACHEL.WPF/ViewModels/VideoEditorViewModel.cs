@@ -97,7 +97,7 @@ namespace KRACHEL.WPF.ViewModels
         {
             for(int i = 0; i < VideoParts.Count; i++)
             {
-                int currentIndex = VideoParts.IndexOf(VideoParts.Skip(i).Where(vp => vp.InTime == VideoParts.Skip(i).Min(vp => vp.InTime)).First());
+                int currentIndex = VideoParts.IndexOf(VideoParts.Skip(i).Where(vp => vp.AtTime == VideoParts.Skip(i).Min(vp => vp.AtTime)).First());
                 VideoParts.Move(currentIndex, i);
             }  
         }
@@ -114,7 +114,7 @@ namespace KRACHEL.WPF.ViewModels
             {
                 await _videoService.CreateVideoFromPictureParts(
                     SourceAudioFilePath,
-                    VideoParts.Select(vp => new VideoPartDTO() { FilePath = vp.FilePath, InTime = vp.InTime }),
+                    VideoParts.Select(vp => new VideoPartDTO() { FilePath = vp.FilePath, InTime = vp.AtTime }),
                     ResultVideoFilePath);
            
                 _dialogService.InformationDialog(WPF.Resources.General.SuccessProcessingOK);
@@ -163,7 +163,7 @@ namespace KRACHEL.WPF.ViewModels
             ClearErrors(nameof(VideoParts));
             if(VideoParts.Count > 0) 
             {
-                if (!VideoParts.Where(vp => vp.InTime == new TimeSpan(0, 0, 0, 0, 0)).Any())
+                if (!VideoParts.Where(vp => vp.AtTime == new TimeSpan(0, 0, 0, 0, 0)).Any())
                 {
                     AddError(nameof(VideoParts), WPF.Resources.General.VideoEditorFirstPartMissing);
                 }

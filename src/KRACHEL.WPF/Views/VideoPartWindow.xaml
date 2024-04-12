@@ -8,26 +8,16 @@
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800">
     <Grid Style="{StaticResource WindowContentGrid}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Name="FileID" Visibility="Hidden" Text="{Binding ID}" />
-
-        <!--Source file path-->
-        <Label Content="{x:Static res:General.LabelFilePath}"/>
-        <TextBox Name="FilePath" Grid.Column="1" IsReadOnly="True" AutomationProperties.Name="{x:Static res:General.LabelFilePath}" Text="{Binding FilePath}" />
-        <Button Name="FileSelect" Grid.Column="2" Click="FileSelect_Click" Content="{x:Static res:General.ElementSelectFile}" />
+        <TextBox Name="FileID" Visibility="Hidden" Text="{Binding ID}" />        
 
         <!--At Time definition-->
-        <GroupBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Header="Zobrazit v čase">
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="{x:Static res:General.PartAtTime}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -54,6 +44,41 @@
             </Grid>
         </GroupBox>
 
-        <Button Name="SavePart" Grid.ColumnSpan="3" Grid.Row="4" Click="SavePart_Click" Content="{x:Static res:General.ElementSave}" />
+        <GroupBox Grid.Column="0" Grid.Row="1" Header="{x:Static res:General.LabelPartDefinition}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Content="{x:Static res:General.LabelVideoPartType}"/>
+                <ComboBox AutomationProperties.Name="{x:Static res:General.LabelVideoPartType}" Name="VideoPartType" Grid.Column="1" ItemsSource="{Binding VideoPartTypes}" SelectedValuePath="ID" DisplayMemberPath="Value" SelectedValue="{Binding VideoPartType}" SelectionChanged="VideoPartType_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="AutomationProperties.Name" Value="{Binding Value}" />
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
+                
+                <!--Source graphic file path-->
+                <Label Grid.Row="1" Visibility="{Binding GraphicVideoPartType}"  Content="{x:Static res:General.LabelFilePath}"/>
+                <TextBox Name="FilePath" Grid.Row="1" Grid.Column="1" Visibility="{Binding GraphicVideoPartType}" IsReadOnly="True" AutomationProperties.Name="{x:Static res:General.LabelFilePath}" Text="{Binding FilePath}" />
+                <Button Name="FileSelect" Grid.Row="1" Grid.Column="2" Visibility="{Binding GraphicVideoPartType}" Click="FileSelect_Click" Content="{x:Static res:General.ElementSelectFile}" />
+
+                <!--Blank screen with text-->
+                <Label Grid.Row="1" Visibility="{Binding BlankScreenTextVideoPartType}"  Content="{x:Static res:General.LabelText}"/>
+                <TextBox Name="VideoPartText" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Visibility="{Binding BlankScreenTextVideoPartType}" AutomationProperties.Name="{x:Static res:General.LabelText}" Text="{Binding VideoPartText}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+
+
+            </Grid>
+        </GroupBox>
+
+        <Button Name="SavePart" Grid.Row="4" Click="SavePart_Click" Content="{x:Static res:General.ElementSave}" />
     </Grid>
 </Window>
