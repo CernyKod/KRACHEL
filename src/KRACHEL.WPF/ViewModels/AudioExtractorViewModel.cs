@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace KRACHEL.WPF.ViewModels
         /// <summary>
         /// Zdrojový soubor - video
         /// </summary>
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelVideoFile))]
         public string SourceVideoFilePath
         {
             get { return _sourceVideoFilePath; }
@@ -36,7 +38,7 @@ namespace KRACHEL.WPF.ViewModels
             {
                 _sourceVideoFilePath = value;
                 NotifyPropertyChanged(nameof(SourceVideoFilePath));
-                ValidateFilePath(nameof(SourceVideoFilePath), _sourceVideoFilePath);
+                ValidateFilePath(this, nameof(SourceVideoFilePath), _sourceVideoFilePath);
             }
         }
         private string _sourceVideoFilePath;
@@ -44,13 +46,14 @@ namespace KRACHEL.WPF.ViewModels
         /// <summary>
         /// Výsledný soubor extrahované audio stopy
         /// </summary>
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelAudioFile))]
         public string ResultAudioFilePath {
             get { return _resultAudioFilePath; }
             set
             {
                 _resultAudioFilePath = value;
                 NotifyPropertyChanged(nameof(ResultAudioFilePath));
-                ValidateNullOrEmpty(nameof(ResultAudioFilePath), _resultAudioFilePath);
+                ValidateNullOrEmpty(this, nameof(ResultAudioFilePath), _resultAudioFilePath);
             }
         
         }     

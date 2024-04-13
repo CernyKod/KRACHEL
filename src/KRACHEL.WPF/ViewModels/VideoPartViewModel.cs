@@ -3,6 +3,7 @@ using KRACHEL.WPF.Services;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -22,13 +23,14 @@ namespace KRACHEL.WPF.ViewModels
             new ComboItem() { ID = 3, Value = Resources.General.SelectItemVideoPartTypeBlankScreen }
         };
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelVideoPartType))]
         public int VideoPartType
         {
             get { return _videoPartType; }
             set
             {
                 _videoPartType = value;
-                ValidateComboSelect(nameof(VideoPartType), _videoPartType);
+                ValidateComboSelect(this, nameof(VideoPartType), _videoPartType);
                 UpdateVideoPartTypeProperties();
             }
         }
@@ -56,19 +58,20 @@ namespace KRACHEL.WPF.ViewModels
         }
         private Visibility _blankScreenTextVideoPartType;
 
-
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelFilePath))]
         public string FilePath
         {
             get { return _filePath; }
             set
             {
                 _filePath = value;
-                NotifyPropertyChanged(nameof(FilePath));      
-                ValidateFilePath(nameof(FilePath), _filePath);
+                NotifyPropertyChanged(nameof(FilePath));    
+                ValidateFilePath(this, nameof(FilePath), _filePath);
             }
         } 
         private string _filePath;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelText))]
         public string VideoPartText
         {
             get { return _videoPartText; }
@@ -76,11 +79,12 @@ namespace KRACHEL.WPF.ViewModels
             {
                 _videoPartText = value;
                 NotifyPropertyChanged(nameof(VideoPartText));
-                ValidateNullOrEmpty(nameof(VideoPartText), _videoPartText);
+                ValidateNullOrEmpty(this, nameof(VideoPartText), _videoPartText);
             }
         }
-        private string _videoPartText; 
+        private string _videoPartText;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelHour))]
         public string Hour
         {
             get { return _hour; }
@@ -93,6 +97,7 @@ namespace KRACHEL.WPF.ViewModels
         }
         private string _hour;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelMinute))]
         public string Minute
         {
             get { return _minute; }
@@ -105,6 +110,7 @@ namespace KRACHEL.WPF.ViewModels
         }
         private string _minute;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelSecond))]
         public string Second
         {
             get { return _second; }
@@ -117,6 +123,7 @@ namespace KRACHEL.WPF.ViewModels
         }
         private string _second;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelMilisecond))]
         public string Millisecond
         {
             get { return _millisecond; }
@@ -197,13 +204,13 @@ namespace KRACHEL.WPF.ViewModels
             uint validatedValue;
             if(!uint.TryParse(value, out validatedValue))
             {
-                AddError(propertyName, WPF.Resources.General.WarningValueIsNotNumber);
+                AddError(this, propertyName, WPF.Resources.General.WarningValueIsNotNumber);
                 return;
             }
 
             if(maxValue.HasValue && !(validatedValue <= maxValue))
             {
-                AddError(propertyName, WPF.Resources.General.WarningValueNumberOutOfRange);
+                AddError(this, propertyName, WPF.Resources.General.WarningValueNumberOutOfRange);
                 return;
             }
         }

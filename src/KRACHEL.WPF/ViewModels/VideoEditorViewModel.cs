@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,10 @@ namespace KRACHEL.WPF.ViewModels
 
         private readonly IVideoService _videoService;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelVideoParts))]
         public ObservableCollection<ViewModels.VideoPartViewModel> VideoParts { get; set; } = new ObservableCollection<ViewModels.VideoPartViewModel>();
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelVideoFile))]
         public string ResultVideoFilePath
         {
             get { return _resultVideoFilePath; }
@@ -29,11 +32,12 @@ namespace KRACHEL.WPF.ViewModels
             {
                 _resultVideoFilePath = value;
                 NotifyPropertyChanged(nameof(ResultVideoFilePath));
-                ValidateNullOrEmpty(nameof(ResultVideoFilePath), _resultVideoFilePath);
+                ValidateNullOrEmpty(this, nameof(ResultVideoFilePath), _resultVideoFilePath);
             }
         }
         private string _resultVideoFilePath;
 
+        [Display(ResourceType = typeof(WPF.Resources.General), Name = nameof(WPF.Resources.General.LabelAudioFile))]
         public string SourceAudioFilePath
         {
             get { return _sourceAudioFilePath; }
@@ -41,7 +45,7 @@ namespace KRACHEL.WPF.ViewModels
             {
                 _sourceAudioFilePath = value;
                 NotifyPropertyChanged(nameof(SourceAudioFilePath));
-                ValidateFilePath(nameof(SourceAudioFilePath), _sourceAudioFilePath);
+                ValidateFilePath(this,nameof(SourceAudioFilePath), _sourceAudioFilePath);
             }
 
         }
@@ -165,11 +169,11 @@ namespace KRACHEL.WPF.ViewModels
             {
                 if (!VideoParts.Where(vp => vp.AtTime == new TimeSpan(0, 0, 0, 0, 0)).Any())
                 {
-                    AddError(nameof(VideoParts), WPF.Resources.General.VideoEditorFirstPartMissing);
+                    AddError(this, nameof(VideoParts), WPF.Resources.General.VideoEditorFirstPartMissing);
                 }
             } else
             {
-                AddError(nameof(VideoParts), WPF.Resources.General.WarningSelectionIsEmpty);
+                AddError(this, nameof(VideoParts), WPF.Resources.General.WarningSelectionIsEmpty);
             }
         }
 
