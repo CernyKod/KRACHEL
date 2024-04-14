@@ -48,6 +48,8 @@ namespace KRACHEL.WPF
 
         private async void Application_Exit(object sender, ExitEventArgs e)
         {
+            _host.Services.GetService<Infrastructure.TemporaryStore.ITemporaryStore>().Clear();
+
             using (_host)
             {
                 await _host.StopAsync(TimeSpan.FromSeconds(5));
@@ -68,6 +70,8 @@ namespace KRACHEL.WPF
                 {
                     services.Configure<Infrastructure.AppSettings.AppSettings>(context.Configuration);
                     services.AddTransient<Core.IVideoBuilder, Infrastructure.FFvideoBuilder.FFVideoBuilder>();
+                    services.AddTransient<Core.IPictureBuilder, Infrastructure.WinImageGenerator.WinImageGenerator>();
+                    services.AddSingleton<Infrastructure.TemporaryStore.ITemporaryStore, Infrastructure.TemporaryStore.DirectoryStore>();
                     services.AddTransient<Core.Service.IVideoService, Core.Service.VideoService>();
                     services.AddSingleton<IViewsManager, ViewsManager>();
                     services.AddSingleton<IDialogService, WindowsDialogService>();

@@ -1,4 +1,5 @@
 ﻿using KRACHEL.Core.DTO;
+using KRACHEL.Core.Enumerations;
 using KRACHEL.Core.Model;
 using KRACHEL.Core.Service;
 using KRACHEL.WPF.Services;
@@ -118,7 +119,14 @@ namespace KRACHEL.WPF.ViewModels
             {
                 await _videoService.CreateVideoFromPictureParts(
                     SourceAudioFilePath,
-                    VideoParts.Select(vp => new VideoPartDTO() { FilePath = vp.FilePath, InTime = vp.AtTime }),
+                    VideoParts
+                        .Select(vp => new VideoPartDTO()
+                        {
+                            VideoPartType = (VideoPartType)vp.VideoPartType,
+                            Text = vp.VideoPartText,
+                            FilePath = vp.FilePath,
+                            AtTime = vp.AtTime
+                        }),
                     ResultVideoFilePath);
            
                 _dialogService.InformationDialog(WPF.Resources.General.SuccessProcessingOK);

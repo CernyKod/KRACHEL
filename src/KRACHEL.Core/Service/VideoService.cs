@@ -13,11 +13,14 @@ namespace KRACHEL.Core.Service
     {
         private readonly IVideoBuilder _videoBuilder;
 
+        private readonly IPictureBuilder _pictureBuilder;
+
         public VideoService() { }
 
-        public VideoService(IVideoBuilder videoBuilder)
+        public VideoService(IVideoBuilder videoBuilder, IPictureBuilder pictureBuilder)
         {
             _videoBuilder = videoBuilder;
+            _pictureBuilder = pictureBuilder;
         }        
 
         public Task<string> ExtractAudioAsync(string videoFilePath, string audioFilePath)
@@ -47,21 +50,49 @@ namespace KRACHEL.Core.Service
 
         public Task<string> CreateVideoFromPictureParts(string audioFilePath, IEnumerable<VideoPartDTO> pictureParts, string outputFilePath)
         {
-            var picturePartsArr = pictureParts.OrderBy(vp => vp.InTime).ToArray();            
+            var picturePartsArr = OrderAndComputeDurationOfVideoParts(pictureParts);
 
-            for(int i = 0; i<picturePartsArr.Count(); i++)
+            PrepaterVideoPartData(picturePartsArr);
+
+            return _videoBuilder.CreateVideoFromPictureParts(audioFilePath, picturePartsArr, outputFilePath);
+        }
+
+        private VideoPartDTO[] OrderAndComputeDurationOfVideoParts(IEnumerable<VideoPartDTO> pictureParts)
+        {
+            var picturePartsArr = pictureParts.OrderBy(vp => vp.AtTime).ToArray();
+
+            for (int i = 0; i < picturePartsArr.Count(); i++)
             {
                 if (i != picturePartsArr.Count() - 1)
                 {
-                    picturePartsArr[i].Duration = picturePartsArr[i + 1].InTime.Subtract(picturePartsArr[i].InTime).TotalSeconds;
+                    picturePartsArr[i].Duration = picturePartsArr[i + 1].AtTime.Subtract(picturePartsArr[i].AtTime).TotalSeconds;
                 }
                 else
                 {
                     picturePartsArr[i].Duration = double.NaN;
                 }
-            }            
+            }
 
-            return _videoBuilder.CreateVideoFromPictureParts(audioFilePath, picturePartsArr, outputFilePath);
+            return picturePartsArr;
+        }
+
+        private void PrepaterVideoPartData(VideoPartDTO[] videoParts)
+        {
+            foreach(VideoPartDTO videoPart in videoParts)
+            {
+                switch (videoPart.VideoPartType) 
+                {
+                    case Enumerations.VideoPartType.BlackScreenWithText:
+                        videoPart.FilePath = _pictureBuilder.CreatePicture(videoPart.Text);
+                        break;
+                    case Enumerations.VideoPartType.BlankScreen:
+                        videoPart.FilePath = _pictureBuilder.CreatePicture();
+                        break;
+                    default:
+                        break;
+                
+                }
+            }
         }
     }
 }
