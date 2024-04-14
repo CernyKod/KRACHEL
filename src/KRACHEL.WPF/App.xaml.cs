@@ -13,6 +13,7 @@ using System.Windows;
 using KRACHEL.WPF.Views.ViewsManager;
 using Serilog;
 using KRACHEL.WPF.Services;
+using System.Reflection;
 
 namespace KRACHEL.WPF
 {
@@ -36,6 +37,8 @@ namespace KRACHEL.WPF
                 _logger = _host.Services.GetService<ILogger<App>>();
 
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+
+                WriteStartUpInfoLog();
 
                 _host.Services.GetService<Views.MainWindow>().Show();
 
@@ -112,6 +115,13 @@ namespace KRACHEL.WPF
             MessageBox.Show($"{e.Exception.Message} {e.Exception.InnerException?.Message }", string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
 
             e.Handled = true;
+        }
+
+        private void WriteStartUpInfoLog()
+        {
+            var assemblyName = Assembly.GetEntryAssembly().GetName();
+
+            _logger.LogInformation($"{assemblyName.Name} {assemblyName.Version.Major}.{assemblyName.Version.Minor}.{assemblyName.Version.Revision}");
         }
     }
 }
