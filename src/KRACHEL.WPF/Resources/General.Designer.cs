@@ -223,6 +223,24 @@ namespace KRACHEL.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Umístění položky v čase.
+        /// </summary>
+        public static string LabelPartAtTime {
+            get {
+                return ResourceManager.GetString("LabelPartAtTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Definice položky.
+        /// </summary>
+        public static string LabelPartDefinition {
+            get {
+                return ResourceManager.GetString("LabelPartDefinition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seznam položek.
         /// </summary>
         public static string LabelPartList {
@@ -250,6 +268,15 @@ namespace KRACHEL.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zadný text.
+        /// </summary>
+        public static string LabelText {
+            get {
+                return ResourceManager.GetString("LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Video soubor.
         /// </summary>
         public static string LabelVideoFile {
@@ -264,6 +291,15 @@ namespace KRACHEL.WPF.Resources {
         public static string LabelVideoParts {
             get {
                 return ResourceManager.GetString("LabelVideoParts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typ položky.
+        /// </summary>
+        public static string LabelVideoPartType {
+            get {
+                return ResourceManager.GetString("LabelVideoPartType", resourceCulture);
             }
         }
         
@@ -349,6 +385,42 @@ namespace KRACHEL.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vyberte.
+        /// </summary>
+        public static string SelectItemDefault {
+            get {
+                return ResourceManager.GetString("SelectItemDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prázdná obrazovka.
+        /// </summary>
+        public static string SelectItemVideoPartTypeBlankScreen {
+            get {
+                return ResourceManager.GetString("SelectItemVideoPartTypeBlankScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prázdná obrazovka se zadaným textem.
+        /// </summary>
+        public static string SelectItemVideoPartTypeBlankScreenText {
+            get {
+                return ResourceManager.GetString("SelectItemVideoPartTypeBlankScreenText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grafika ve formě obrázku.
+        /// </summary>
+        public static string SelectItemVideoPartTypeGraphic {
+            get {
+                return ResourceManager.GetString("SelectItemVideoPartTypeGraphic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zpracování bylo úspěšně dokončeno..
         /// </summary>
         public static string SuccessProcessingOK {
@@ -399,6 +471,15 @@ namespace KRACHEL.WPF.Resources {
         public static string WarningValueIsNotValid {
             get {
                 return ResourceManager.GetString("WarningValueIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hodnota je mimo povolený číselný rozsah..
+        /// </summary>
+        public static string WarningValueNumberOutOfRange {
+            get {
+                return ResourceManager.GetString("WarningValueNumberOutOfRange", resourceCulture);
             }
         }
     }

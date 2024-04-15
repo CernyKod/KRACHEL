@@ -13,6 +13,7 @@ using System.Windows;
 using KRACHEL.WPF.Views.ViewsManager;
 using Serilog;
 using KRACHEL.WPF.Services;
+using System.Reflection;
 
 namespace KRACHEL.WPF
 {
@@ -37,6 +38,8 @@ namespace KRACHEL.WPF
 
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
+                WriteStartUpInfoLog();
+
                 _host.Services.GetService<Views.MainWindow>().Show();
 
             }
@@ -48,6 +51,8 @@ namespace KRACHEL.WPF
 
         private async void Application_Exit(object sender, ExitEventArgs e)
         {
+            _host.Services.GetService<Infrastructure.TemporaryStore.ITemporaryStore>().Clear();
+
             using (_host)
             {
                 await _host.StopAsync(TimeSpan.FromSeconds(5));
@@ -68,6 +73,8 @@ namespace KRACHEL.WPF
                 {
                     services.Configure<Infrastructure.AppSettings.AppSettings>(context.Configuration);
                     services.AddTransient<Core.IVideoBuilder, Infrastructure.FFvideoBuilder.FFVideoBuilder>();
+                    services.AddTransient<Core.IPictureBuilder, Infrastructure.WinImageGenerator.WinImageGenerator>();
+                    services.AddSingleton<Infrastructure.TemporaryStore.ITemporaryStore, Infrastructure.TemporaryStore.DirectoryStore>();
                     services.AddTransient<Core.Service.IVideoService, Core.Service.VideoService>();
                     services.AddSingleton<IViewsManager, ViewsManager>();
                     services.AddSingleton<IDialogService, WindowsDialogService>();
@@ -108,6 +115,13 @@ namespace KRACHEL.WPF
             MessageBox.Show($"{e.Exception.Message} {e.Exception.InnerException?.Message }", string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
 
             e.Handled = true;
+        }
+
+        private void WriteStartUpInfoLog()
+        {
+            var assemblyName = Assembly.GetEntryAssembly().GetName();
+
+            _logger.LogInformation($"{assemblyName.Name} {assemblyName.Version.Major}.{assemblyName.Version.Minor}.{assemblyName.Version.Revision}");
         }
     }
 }

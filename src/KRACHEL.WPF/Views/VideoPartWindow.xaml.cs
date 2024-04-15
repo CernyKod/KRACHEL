@@ -40,15 +40,24 @@ namespace KRACHEL.WPF.Views
             var currentViewModel = (ViewModels.VideoPartViewModel)this.DataContext;
             var parentEditorViewModel = (ViewModels.VideoEditorViewModel)this.Tag;
 
-            currentViewModel.SavePart(parentEditorViewModel);      
-            
-            this.Close();
-            this.Owner.Activate();
+            if(currentViewModel.SavePart(parentEditorViewModel))
+            {
+                this.Close();
+                this.Owner.Activate();
+            }   
         }
 
         private void FileSelect_Click(object sender, RoutedEventArgs e)
         {
             ((ViewModels.VideoPartViewModel)DataContext).FileSelect();
+        }
+
+        private void VideoPartType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(sender != null && ((ComboBox)sender).SelectedValue != null)
+            {
+                ((ViewModels.VideoPartViewModel)DataContext).VideoPartType = (int)((ComboBox)sender).SelectedValue;
+            }            
         }
     }
 }

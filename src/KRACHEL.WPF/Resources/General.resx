@@ -171,6 +171,12 @@
   <data name="LabelMinute" xml:space="preserve">
     <value>Minuta</value>
   </data>
+  <data name="LabelPartAtTime" xml:space="preserve">
+    <value>Umístění položky v čase</value>
+  </data>
+  <data name="LabelPartDefinition" xml:space="preserve">
+    <value>Definice položky</value>
+  </data>
   <data name="LabelPartList" xml:space="preserve">
     <value>Seznam položek</value>
   </data>
@@ -180,11 +186,17 @@
   <data name="LabelSecond" xml:space="preserve">
     <value>Sekunda</value>
   </data>
+  <data name="LabelText" xml:space="preserve">
+    <value>Zadný text</value>
+  </data>
   <data name="LabelVideoFile" xml:space="preserve">
     <value>Video soubor</value>
   </data>
   <data name="LabelVideoParts" xml:space="preserve">
     <value>Položky videa</value>
+  </data>
+  <data name="LabelVideoPartType" xml:space="preserve">
+    <value>Typ položky</value>
   </data>
   <data name="NameAudioExtractor" xml:space="preserve">
     <value>Audio extraktor</value>
@@ -213,6 +225,18 @@
   <data name="PartFile" xml:space="preserve">
     <value>Soubor</value>
   </data>
+  <data name="SelectItemDefault" xml:space="preserve">
+    <value>Vyberte</value>
+  </data>
+  <data name="SelectItemVideoPartTypeBlankScreen" xml:space="preserve">
+    <value>Prázdná obrazovka</value>
+  </data>
+  <data name="SelectItemVideoPartTypeBlankScreenText" xml:space="preserve">
+    <value>Prázdná obrazovka se zadaným textem</value>
+  </data>
+  <data name="SelectItemVideoPartTypeGraphic" xml:space="preserve">
+    <value>Grafika ve formě obrázku</value>
+  </data>
   <data name="SuccessProcessingOK" xml:space="preserve">
     <value>Zpracování bylo úspěšně dokončeno.</value>
   </data>
@@ -230,5 +254,8 @@
   </data>
   <data name="WarningValueIsNotValid" xml:space="preserve">
     <value>Není platná hodnota.</value>
+  </data>
+  <data name="WarningValueNumberOutOfRange" xml:space="preserve">
+    <value>Hodnota je mimo povolený číselný rozsah.</value>
   </data>
 </root>

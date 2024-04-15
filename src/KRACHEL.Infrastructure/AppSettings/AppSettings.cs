@@ -19,5 +19,11 @@ namespace KRACHEL.Infrastructure.AppSettings
         public int VideoResolutionHeight { get; set; }
 
         public double VideoTransitionDuration { get; set; }
+
+        public string PictureBackgroundHexh { get; set; }
+
+        public string PictureForegroundHexh { get; set; }
+
+        public string PictureFontName { get; set; }
     }
 }

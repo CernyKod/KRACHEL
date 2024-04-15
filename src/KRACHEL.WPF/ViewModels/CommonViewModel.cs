@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KRACHEL.WPF.ValueObjcts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +41,7 @@ namespace KRACHEL.WPF.ViewModels
         /// <summary>
         /// Seznam chyb pro dané atributy
         /// </summary>
-        private readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
+        private readonly List<ViewModelDataError> _errorsByPropertyName = new List<ViewModelDataError>();
 
         /// <summary>
         /// Výbys chyb dat pro daný atribut
@@ -50,9 +51,10 @@ namespace KRACHEL.WPF.ViewModels
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public IEnumerable GetErrors(string propertyName)
+        public IEnumerable? GetErrors(string propertyName)
         {
-            return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
+            return _errorsByPropertyName.Where(e => e.PropertyName == propertyName).FirstOrDefault()?.Errors;
+            //return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
         }
 
         /// <summary>
@@ -63,9 +65,9 @@ namespace KRACHEL.WPF.ViewModels
         public string GetErrorsSummary(string propertyName = null)
         {
             var summaryBuilder = new StringBuilder();
-            foreach(var property in _errorsByPropertyName.Where(p => propertyName == null || p.Key == propertyName))
+            foreach(var property in _errorsByPropertyName.Where(p => propertyName == null || p.PropertyName == propertyName))
             {
-                property.Value.ForEach(err => summaryBuilder.AppendLine($"{property.Key} - {err}"));
+                property.Errors.ForEach(err => summaryBuilder.AppendLine($"{property.PropertyLabel} - {err}"));
             }
 
             return summaryBuilder.ToString();
@@ -89,14 +91,22 @@ namespace KRACHEL.WPF.ViewModels
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="error"></param>
-        protected void AddError(string propertyName, string error)
+        protected void AddError(CommonViewModel viewModel, string propertyName, string error)
         {
-            if (!_errorsByPropertyName.ContainsKey(propertyName))
-                _errorsByPropertyName[propertyName] = new List<string>();
-
-            if (!_errorsByPropertyName[propertyName].Contains(error))
+            if (!_errorsByPropertyName.Exists(e => e.PropertyName == propertyName))
             {
-                _errorsByPropertyName[propertyName].Add(error);
+                _errorsByPropertyName.Add(
+                    new ViewModelDataError()
+                    {
+                        PropertyName = propertyName,
+                        PropertyLabel = ViewModelHelper.GetLabelForProperty(viewModel, propertyName),
+                        Errors = new List<string>()
+                    });
+            }                
+
+            if (!_errorsByPropertyName.Where(e => e.PropertyName == propertyName).First().Errors.Contains(error))
+            {
+                _errorsByPropertyName.Where(e => e.PropertyName == propertyName).First().Errors.Add(error);
                 OnErrorsChanged(propertyName);
             }
         }
@@ -108,9 +118,9 @@ namespace KRACHEL.WPF.ViewModels
         /// <param name="propertyName"></param>
         protected void ClearErrors(string propertyName)
         {
-            if (_errorsByPropertyName.ContainsKey(propertyName))
+            if (_errorsByPropertyName.Exists(e => e.PropertyName == propertyName))
             {
-                _errorsByPropertyName.Remove(propertyName);
+                _errorsByPropertyName.RemoveAll(e => e.PropertyName == propertyName);
                 OnErrorsChanged(propertyName);
             }
         }
@@ -120,12 +130,12 @@ namespace KRACHEL.WPF.ViewModels
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="filePath"></param>
-        protected void ValidateFilePath(string propertyName, string filePath)
+        protected void ValidateFilePath(CommonViewModel viewModel, string propertyName, string filePath)
         {
             ClearErrors(propertyName);
             if(!System.IO.File.Exists(filePath))
             {
-                AddError(propertyName, WPF.Resources.General.WarningFilePathIsNotValid);
+                AddError(viewModel, propertyName, WPF.Resources.General.WarningFilePathIsNotValid);
             }            
         }
 
@@ -134,12 +144,21 @@ namespace KRACHEL.WPF.ViewModels
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="value"></param>
-        protected void ValidateNullOrEmpty(string propertyName, string value)
+        protected void ValidateNullOrEmpty(CommonViewModel viewModel, string propertyName, string value)
         {
             ClearErrors(propertyName);
             if (string.IsNullOrEmpty(value))
             {
-                AddError(propertyName, WPF.Resources.General.WarningValueIsNotValid);
+                AddError(viewModel, propertyName, WPF.Resources.General.WarningValueIsNotValid);
+            }
+        }
+
+        protected void ValidateComboSelect(CommonViewModel viewModel, string propertyName, int value)
+        {
+            ClearErrors(propertyName);
+            if(value == 0) 
+            {
+                AddError(viewModel, propertyName, WPF.Resources.General.WarningValueIsNotValid);
             }
         }
     }
